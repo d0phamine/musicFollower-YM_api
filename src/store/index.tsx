@@ -2,12 +2,17 @@ import React, { createContext, useContext } from "react";
 import { musicStore } from "./musicStore";
 import { authStore } from "./authStore";
 
+interface IStores {
+  authStore:unknown,
+  musicStore:unknown
+}
+
 type StoreProps = {
     store: any,
     children:any,
 }
 
-export const rootStore = {musicStore, authStore};
+export const rootStore:IStores = {musicStore, authStore};
 
 export const RootStoreContext = createContext({ rootStore });
 

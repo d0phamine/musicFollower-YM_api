@@ -1,5 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 
-export const authStore = makeAutoObservable({
-    
+export const authStore:unknown = makeAutoObservable({
+    username: "",
+    password: ""
 })

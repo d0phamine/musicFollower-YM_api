@@ -1,27 +1,17 @@
 import { FC } from "react";
 import { AuthLayout } from "../../Layout/authLayout";
 import { GlobalOutlined } from "@ant-design/icons";
-import type { FormProps } from "antd";
-import { Button, Checkbox, Form, Input, ConfigProvider, theme } from "antd";
+import { Button, Input, ConfigProvider, theme } from "antd";
+import { initApi } from "../../api/auth";
+import { observer } from "mobx-react-lite";
 
 import "./index.scss";
+import { useRootStore } from "../../store";
 
-export const IndexPage: FC = () => {
-	type FieldType = {
-		username?: string;
-		password?: string;
-		remember?: string;
-	};
 
-	const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
-		console.log("Success:", values);
-	};
+export const IndexPage: FC = observer(() => {
+	// const {authStore} = useRootStore()
 
-	const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (
-		errorInfo,
-	) => {
-		console.log("Failed:", errorInfo);
-	};
 	return (
 		<ConfigProvider
 			theme={{
@@ -43,14 +33,14 @@ export const IndexPage: FC = () => {
 							<div className="auth-card__form">
 								<div className="form-email">
 									<p>Email addess</p>
-									<Input placeholder="Basic usage" />
+									<Input placeholder="user@mail.com" />
 								</div>
 								<div className="form-password">
 									<div className="form-password__label">
 										<p>Password</p>
 										<a href="">Forgot Password?</a>
 									</div>
-									<Input placeholder="Basic usage" />
+									<Input placeholder="Enter your password" />
 								</div>
 							</div>
 							<Button type="primary">Sign in</Button>
@@ -64,5 +54,5 @@ export const IndexPage: FC = () => {
 			</AuthLayout>
 		</ConfigProvider>
 	);
-};
+});
 
