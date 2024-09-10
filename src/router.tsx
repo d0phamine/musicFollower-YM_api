@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { HashRouter, Route, Routes } from "react-router-dom";
-import { IndexPage } from "./pages";
+import { IndexPage } from "./pages/AuthPage";
 import { PopupPage } from "./pages/popup";
 
 export const Router: FC = () => {

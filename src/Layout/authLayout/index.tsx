@@ -1,7 +1,10 @@
 import { FC, ReactNode, useEffect } from "react";
-import { Titlebar } from "../../Titlebar";
+import { Titlebar } from "../../components/Titlebar";
+import "./index.scss"
 
 const { ipcRenderer } = window.require("electron");
+
+
 
 export interface ILayout {
 	children: ReactNode;
@@ -9,9 +12,9 @@ export interface ILayout {
 
 export const AuthLayout: FC<ILayout> = ({ children }) => {
     return (
-		<>
+		<div className="layout-wrapper">
 			<Titlebar />
-			<div className="auth-wrapper">{children}</div>
-		</>
+			<div className="auth-layout">{children}</div>
+		</div>
 	);
 }
