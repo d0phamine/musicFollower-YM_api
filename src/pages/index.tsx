@@ -1,10 +1,10 @@
 import { FC } from "react";
-import { Layout } from "../components/Layout";
+import { MainLayout } from "../components/Layout/mainLayout";
 
 export const IndexPage: FC = () => {
 	return (
-		<Layout>
-			<div>Hello main (new update!)</div>
-		</Layout>
+		<MainLayout>
+			<div></div>
+		</MainLayout>
 	);
 };

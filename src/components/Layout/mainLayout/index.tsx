@@ -1,5 +1,5 @@
 import { FC, ReactNode, useEffect } from "react";
-import { Titlebar } from "../Titlebar";
+import { Titlebar } from "../../Titlebar";
 
 const { ipcRenderer } = window.require("electron");
 
@@ -7,7 +7,7 @@ export interface ILayout {
 	children: ReactNode;
 }
 
-export const Layout: FC<ILayout> = ({ children }) => {
+export const MainLayout: FC<ILayout> = ({ children }) => {
 	useEffect(() => {
 		ipcRenderer.send("app_version");
 
@@ -31,7 +31,7 @@ export const Layout: FC<ILayout> = ({ children }) => {
 	return (
 		<>
 			<Titlebar />
-			<div className="select-none">{children}</div>
+			<div className="wrapper-">{children}</div>
 		</>
 	);
 };
