@@ -47,6 +47,11 @@
 
 				.form-email {
 					width: 100%;
+
+					&__error{
+						font-size: 10px;
+						color: #fd4b53;
+					}
 				}
 
 				.form-password {
