@@ -1,11 +1,10 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import {
 	IoCloseOutline,
 	IoContractOutline,
 	IoExpandOutline,
 	IoRemove,
 } from "react-icons/io5";
-import Amethyst from "../../assets/amethyst.png";
 
 const { getCurrentWindow, app } = window.require("@electron/remote");
 

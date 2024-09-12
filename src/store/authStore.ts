@@ -1,20 +1,29 @@
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable } from 'mobx';
 
 export interface IAuth {
-    email: string,
-    password: string
+    username: string,
+    password: string,
+    registered: boolean
 }
 
 export class authStore{
     public authData: IAuth = {
-        email: '',
-        password: ''
+        username: '',
+        password: '',
+        registered: false
     }
 
-    public getAuthCreds(email:string, password:string){
-        this.authData.email = email
+    constructor() {
+        makeAutoObservable(this); // Делаем все поля и методы реактивными
+      }
+
+    public getAuthCreds(username:string, password:string){
+        this.authData.username = username
         this.authData.password = password
     }
-    
-        
+
+    public changeRegistered(){
+        this.authData.registered = !this.authData.registered
+    }
+      
 }

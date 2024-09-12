@@ -1,21 +1,38 @@
-import { FC } from "react";
-import { useFormik, Form, Formik } from "formik";
+import { FC, useEffect } from "react";
+import { Formik } from "formik";
 import * as Yup from "yup";
 
 import { GlobalOutlined } from "@ant-design/icons";
 import { Button, Input, ConfigProvider, theme } from "antd";
+import { Link } from "react-router-dom";
 
-import { initApi } from "../../api/auth";
+import { toast, Slide } from "react-toastify";
+
 import { AuthLayout } from "../../Layout/authLayout";
 
 import { observer } from "mobx-react-lite";
 import { useStores } from "../../store";
 
 import "./index.scss";
-import { error } from "console";
 
-export const IndexPage: FC = observer(() => {
+export const AuthPage: FC = observer(() => {
 	const { authStore } = useStores();
+
+	if (authStore.authData.registered) {
+		toast.success("You successfull registered!", {
+			className: "styled-notifications-success",
+			position: "top-right",
+			autoClose: 5000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+			theme: "dark",
+			transition: Slide,
+		});
+		authStore.changeRegistered();
+	}
 
 	return (
 		<ConfigProvider
@@ -37,7 +54,7 @@ export const IndexPage: FC = observer(() => {
 									values.email,
 									values.password,
 								);
-								initApi(authStore.authData.email, authStore.authData.password)
+								console.log(authStore.authData);
 							}}
 							validationSchema={Yup.object().shape({
 								email: Yup.string()
@@ -110,7 +127,9 @@ export const IndexPage: FC = observer(() => {
 											</Button>
 											<div className="auth-card__signup">
 												<p>New here?</p>
-												<a href="">Sign up</a>
+												<Link to="/register">
+													Sign up
+												</Link>
 											</div>
 										</div>
 									</form>
