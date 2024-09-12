@@ -6,7 +6,7 @@ import { GlobalOutlined } from "@ant-design/icons";
 import { Button, Input, ConfigProvider, theme } from "antd";
 import { Link } from "react-router-dom";
 
-import { toast, Slide } from "react-toastify";
+import { SuccesToast } from "../../components/Toast";
 
 import { AuthLayout } from "../../Layout/authLayout";
 
@@ -19,18 +19,7 @@ export const AuthPage: FC = observer(() => {
 	const { authStore } = useStores();
 
 	if (authStore.authData.registered) {
-		toast.success("You successfull registered!", {
-			className: "styled-notifications-success",
-			position: "top-right",
-			autoClose: 5000,
-			hideProgressBar: false,
-			closeOnClick: true,
-			pauseOnHover: true,
-			draggable: true,
-			progress: undefined,
-			theme: "dark",
-			transition: Slide,
-		});
+		SuccesToast("You successfully registered")
 		authStore.changeRegistered();
 	}
 

@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Formik, ErrorMessage, Form, FormikValues } from "formik";
 import * as Yup from "yup";
 
-import { toast, Slide } from "react-toastify";
+import { SuccesToast, ErrorToast } from "../../components/Toast";
 
 import { AuthLayout } from "../../Layout/authLayout";
 
@@ -33,18 +33,7 @@ export const RegisterPage: FC = observer(() => {
             redirect('/')
 		} else {
             console.log(res.message)
-            toast.error(res.message, {
-                className: "styled-notifications-error",
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-                transition: Slide,
-            });
+            ErrorToast(res.message)
         }
 	};
 
