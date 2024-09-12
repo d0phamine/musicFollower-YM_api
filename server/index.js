@@ -29,13 +29,13 @@ app.post("/api/register", async (req, res) => {
 	if (!username || !password) {
 		return res
 			.status(400)
-			.json({ message: "Username and password are required" });
+			.json({ message: "Username and password are required", registered: false });
 	}
 
 	// Проверяем, существует ли пользователь с таким же логином
 	db.findOne({ username }, async (err, user) => {
 		if (user) {
-			return res.status(400).json({ message: "User already exists" });
+			return res.status(400).json({ message: "User already exists", registered: false });
 		}
 
 		// Хешируем пароль

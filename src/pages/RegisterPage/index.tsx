@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Formik, ErrorMessage, Form, FormikValues } from "formik";
 import * as Yup from "yup";
 
-import { toast } from "react-toastify";
+import { toast, Slide } from "react-toastify";
 
 import { AuthLayout } from "../../Layout/authLayout";
 
@@ -23,14 +23,29 @@ export const RegisterPage: FC = observer(() => {
 
 	const handleSubmit = async (values: FormikValues) => {
 		console.log(values);
-		const registered = await HandleRegister(
+		const res = await HandleRegister(
 			values.username,
 			values.password,
 		);
-		if (registered) {
+        console.log(res, "ответ запроса")
+		if (res.registered) {
 			authStore.changeRegistered();
             redirect('/')
-		}
+		} else {
+            console.log(res.message)
+            toast.error(res.message, {
+                className: "styled-notifications-error",
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Slide,
+            });
+        }
 	};
 
 	return (

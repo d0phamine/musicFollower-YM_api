@@ -60,5 +60,17 @@ body {
 	.Toastify__progress-bar--success{
 		background: rgba(7, 188, 12, 1);
 	}
+
+	
 }
 
+.styled-notifications-error {
+	background-color: rgba(85, 85, 85, 0.124);
+	backdrop-filter: blur(8px);
+	border: 1px solid rgba(255, 255, 255, 0.124);
+	box-shadow: 0 0px 25px rgba(188, 31, 7, 0.277);
+	color: #d0d0d2;
+	.Toastify__progress-bar--error{
+		background: rgba(231, 77, 60, 0.742);
+	}
+}
