@@ -1,15 +1,13 @@
 import { makeAutoObservable } from 'mobx';
 
 export interface IAuth {
-    username: string,
-    password: string,
+    token:string | null
     registered: boolean
 }
 
 export class authStore{
-    public authData: IAuth = {
-        username: '',
-        password: '',
+    public authData:IAuth = {
+        token: null,
         registered: false
     }
 
@@ -17,11 +15,26 @@ export class authStore{
         makeAutoObservable(this); // Делаем все поля и методы реактивными
       }
 
-    public getAuthCreds(username:string, password:string){
-        this.authData.username = username
-        this.authData.password = password
+    public setToken(token:string){
+        this.authData.token = token
+        localStorage.setItem('token', token)
     }
 
+    public getToken(): string | null {
+        // Если токен уже есть в памяти, возвращаем его
+        if (this.authData.token) {
+          return this.authData.token;
+        }
+        // Если токена в памяти нет, пробуем достать его из localStorage
+        this.authData.token = localStorage.getItem('token');
+        return this.authData.token;
+      }
+
+    public clearToken(){
+        this.authData.token = null
+        localStorage.removeItem('token')
+    }
+    
     public changeRegistered(){
         this.authData.registered = !this.authData.registered
     }

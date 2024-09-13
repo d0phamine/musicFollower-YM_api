@@ -10,8 +10,7 @@ export interface ILayout {
 export const MainLayout: FC<ILayout> = ({ children }) => {
 	return (
 		<>
-			<Titlebar />
-			<div className="wrapper-">{children}</div>
+			<div className="wrapper-main">{children}</div>
 		</>
 	);
 };

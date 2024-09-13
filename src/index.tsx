@@ -8,6 +8,7 @@ import "./styles/tailwind.css";
 import "./styles/titlebar.css";
 
 import { Router } from "./router";
+import { Titlebar } from "./components/Titlebar";
 
 const root = ReactDOM.createRoot(
 	document.getElementById("root") as HTMLElement,
@@ -16,6 +17,7 @@ const root = ReactDOM.createRoot(
 root.render(
 	<React.StrictMode>
 		<ToastContainer position="top-right" autoClose={2500} />
+		<Titlebar/>
 		<Router />
 	</React.StrictMode>,
 );

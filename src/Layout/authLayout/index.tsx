@@ -15,7 +15,6 @@ export const AuthLayout: FC<ILayout> = observer(({ children }) => {
 
 	return (
 		<div className="layout-wrapper">
-			<Titlebar />
 			<div className="auth-layout">{children}</div>
 		</div>
 	);

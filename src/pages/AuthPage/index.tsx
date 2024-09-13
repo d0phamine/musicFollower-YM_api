@@ -1,12 +1,12 @@
 import { FC, useEffect } from "react";
-import { Formik } from "formik";
+import { Formik, FormikValues } from "formik";
 import * as Yup from "yup";
 
 import { GlobalOutlined } from "@ant-design/icons";
 import { Button, Input, ConfigProvider, theme } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-import { SuccesToast } from "../../components/Toast";
+import { ErrorToast, SuccesToast } from "../../components/Toast";
 
 import { AuthLayout } from "../../Layout/authLayout";
 
@@ -14,13 +14,31 @@ import { observer } from "mobx-react-lite";
 import { useStores } from "../../store";
 
 import "./index.scss";
+import { set } from "mobx";
+import { HandleAuth } from "../../api/auth";
 
 export const AuthPage: FC = observer(() => {
 	const { authStore } = useStores();
+	const redirect = useNavigate()
 
 	if (authStore.authData.registered) {
 		SuccesToast("You successfully registered")
 		authStore.changeRegistered();
+	}
+
+	const handleSubmit = async (values:FormikValues) => {
+		console.log(values, "values")
+		const res = await HandleAuth(
+			values.username,
+			values.password
+		)
+		console.log(res)
+		if (res.token){
+			authStore.setToken(res.token)
+			redirect('/feed')
+		}else {
+			ErrorToast(res.message)
+		}
 	}
 
 	return (
@@ -37,19 +55,16 @@ export const AuthPage: FC = observer(() => {
 				<div className="auth-page">
 					<div className="auth-page__background-image">
 						<Formik
-							initialValues={{ email: "", password: "" }}
-							onSubmit={(values, { setSubmitting }) => {
-								authStore.getAuthCreds(
-									values.email,
-									values.password,
-								);
-								console.log(authStore.authData);
-							}}
+							initialValues={{ username: "", password: "" }}
+							
 							validationSchema={Yup.object().shape({
-								email: Yup.string()
-									.email()
+								username: Yup.string()
 									.required("Required"),
 							})}
+							onSubmit={(values, { setSubmitting }) => {
+								handleSubmit(values)
+								setSubmitting(false)
+							}}
 						>
 							{(props) => {
 								const {
@@ -71,24 +86,23 @@ export const AuthPage: FC = observer(() => {
 											<h2>Sign in to your account</h2>
 											<div className="auth-card__form">
 												<div className="form-email">
-													<p>Email addess</p>
+													<p>Username</p>
 													<Input
-														placeholder="user@mail.com"
-														name="email"
+														placeholder="Username"
+														name="username"
 														onChange={handleChange}
-														value={values.email}
+														value={values.username}
 														status={
-															touched.email &&
-															errors.email
+															touched.username &&
+															errors.username
 																? "error"
 																: ""
 														}
 													/>
-													{touched.email &&
-													errors.email ? (
+													{touched.username &&
+													errors.username ? (
 														<p className="form-email__error">
-															Email should be a
-															valid email address
+															Username is required
 														</p>
 													) : null}
 												</div>

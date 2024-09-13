@@ -34,6 +34,8 @@ body {
 
 	#root {
 		height: 100%;
+		display: grid;
+		grid-template-rows: 0px 32px 1fr;
 	}
 
 	h1 {
@@ -59,6 +61,7 @@ body {
 
 	.Toastify__progress-bar--success{
 		background: rgba(7, 188, 12, 1);
+		height: 2px;
 	}
 
 	
@@ -72,5 +75,6 @@ body {
 	color: #d0d0d2;
 	.Toastify__progress-bar--error{
 		background: rgba(231, 77, 60, 0.742);
+		height: 2px;
 	}
 }
