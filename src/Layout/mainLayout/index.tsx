@@ -1,6 +1,8 @@
 import { FC, ReactNode, useEffect } from "react";
 import { Titlebar } from "../../components/Titlebar";
 
+import './index.scss'
+
 const { ipcRenderer } = window.require("electron");
 
 export interface ILayout {
@@ -10,7 +12,9 @@ export interface ILayout {
 export const MainLayout: FC<ILayout> = ({ children }) => {
 	return (
 		<>
-			<div className="wrapper-main">{children}</div>
+			<div className="layout-wrapper">
+				<div className="main-layout">{children}</div>
+			</div>
 		</>
 	);
 };

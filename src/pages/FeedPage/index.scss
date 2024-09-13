@@ -1,0 +1,23 @@
+.feed-page{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+
+    &__background-image {
+        width: 800px;
+        height: 100%;
+        background-image: url(../../assets/images/abstract2.gif);
+        background-size: 100% 100%;
+        display: grid;
+        grid-template-columns: 1fr 160px;
+
+        .feed-block{
+            padding: 24px 0px 0px 0px;
+        }
+
+        .user-block{
+            padding: 24px 0px 0px 0px;
+        }
+
+    }
+}
