@@ -2,6 +2,7 @@
     height: 100%;
     display: flex;
     justify-content: center;
+    overflow: hidden;
 
     &__background-image {
         width: 800px;
@@ -10,13 +11,72 @@
         background-size: 100% 100%;
         display: grid;
         grid-template-columns: 1fr 160px;
+        grid-gap: 12px;
+        overflow: hidden;
 
         .feed-block{
             padding: 24px 0px 0px 0px;
+            display: grid;
+            grid-template-rows: 32px 1fr;
+            grid-gap: 12px;
+            overflow-y: hidden;
+            height: 100%;
+
+            &__card-container{
+                overflow-y: auto;
+                height: 86vh;
+            }
         }
 
         .user-block{
             padding: 24px 0px 0px 0px;
+            display: flex;
+            flex-direction: column;
+            
+
+            &__info{
+                width: 100%;
+                background-color: rgba(0, 0, 0, 0.124);
+			    backdrop-filter: blur(8px);
+			    border: 1px solid #424242;
+                border-radius: 6px;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                padding: 6px 6px;
+                font-size: 12px;
+
+                .info-avatar {
+                    border-radius: 100%;
+                    background-color: transparent;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .info-username{
+                    color: #656565 ;
+                }
+                .info-username::first-letter{
+                    text-transform: uppercase;
+                }
+            }
+
+            &__info:hover{
+                box-shadow: 0 8px 25px rgba(110, 86, 208, 0.51);
+                border-color: #7f6bce;
+                transition: 0.3s;
+
+                .info-avatar{
+                    .anticon {
+                        color: #7f6bce !important;
+                    }
+                }
+
+                .info-username{
+                    color: #7f6bce;
+                }
+            }
         }
 
     }

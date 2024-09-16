@@ -18,7 +18,7 @@ import { set } from "mobx";
 import { HandleAuth } from "../../api/auth";
 
 export const AuthPage: FC = observer(() => {
-	const { authStore } = useStores();
+	const { authStore, userStore } = useStores();
 	const redirect = useNavigate();
 
 	if (authStore.authData.registered) {
@@ -29,9 +29,10 @@ export const AuthPage: FC = observer(() => {
 	const handleSubmit = async (values: FormikValues) => {
 		console.log(values, "values");
 		const res = await HandleAuth(values.username, values.password);
-		console.log(res);
 		if (res.token) {
 			authStore.setToken(res.token);
+			userStore.setUserData(res.username, res.id)
+			console.log(authStore.authData, userStore.userData)
 			redirect("/feed");
 		} else {
 			ErrorToast(res.message);

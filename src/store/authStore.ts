@@ -8,7 +8,7 @@ export interface IAuth {
 export class authStore{
     public authData:IAuth = {
         token: null,
-        registered: false
+        registered: false,
     }
 
     constructor() {

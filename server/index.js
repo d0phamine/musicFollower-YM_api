@@ -91,7 +91,7 @@ app.post("/api/login", async (req, res) => {
 			{ expiresIn: "1h" },
 		);
 
-		res.json({ token:token, success:true });
+		res.json({ token:token, success:true, id:user._id, username:user.username });
 	});
 });
 
