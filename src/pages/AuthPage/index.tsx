@@ -32,7 +32,7 @@ export const AuthPage: FC = observer(() => {
 		if (res.token) {
 			authStore.setToken(res.token);
 			userStore.setUserData(res.username, res.id)
-			console.log(authStore.authData, userStore.userData)
+			console.log(authStore.authData, userStore.userData, "user data")
 			redirect("/feed");
 		} else {
 			ErrorToast(res.message);

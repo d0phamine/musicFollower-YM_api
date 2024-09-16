@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState, useRef } from "react";
 import { ConfigProvider, theme } from "antd";
 import { SmileOutlined } from "@ant-design/icons";
 import { observer } from "mobx-react-lite";
@@ -13,13 +13,58 @@ import { ImageCard } from "../../components/imageCard";
 
 export const FeedPage: FC = observer(() => {
 	const { userStore, imagesStore } = useStores();
+	const feedBlockRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		userStore.getUserData();
-		imagesStore.getImages();
-	}, [userStore, imagesStore]);
+		// userStore.getUserData();
+		if (imagesStore.imageData.images.length === 0) {
+			imagesStore.getImages(0, imagesStore.imageData.limit);
+			console.log(imagesStore.imageData.images, "get images");
+		}
 
-	console.log(imagesStore.imageData.images);
+		const feedBlock = feedBlockRef.current;
+		if (feedBlock) {
+			// Добавляем обработчик скролла на блок
+			feedBlock.addEventListener('scroll', handleScroll);
+		}
+		return () => {
+			// Очищаем обработчик при размонтировании
+			if (feedBlock) {
+				feedBlock.removeEventListener('scroll', handleScroll);
+			}
+		};
+	}, [imagesStore]);
+
+	const handleScroll = () => {
+		const feedBlock = feedBlockRef.current;
+		if (feedBlock) {
+			const scrollTop = feedBlock.scrollTop;
+			const scrollHeight = feedBlock.scrollHeight;
+			const clientHeight = feedBlock.clientHeight;
+
+			// Проверяем, что пользователь прокрутил до конца блока
+			if (scrollTop + clientHeight >= scrollHeight - 100 && !imagesStore.imageData.isFetching && imagesStore.imageData.hasMore) {
+				fetchMoreImages();
+			}
+		}
+	};
+
+	const fetchMoreImages = async () => {
+		imagesStore.changeIsFetching(); // Устанавливаем флаг загрузки
+
+		// Подгружаем новые изображения с учётом текущего офсета
+		const newImages: any = await imagesStore.getImages(
+			imagesStore.imageData.images.length,
+			imagesStore.imageData.limit,
+		);
+
+		if (newImages.length < imagesStore.imageData.limit) {
+			// Если меньше, чем `limit`, значит больше данных нет
+			imagesStore.changeIsFetching();
+		}
+
+		imagesStore.changeIsFetching(); // Отключаем флаг загрузки после получения данных
+	};
 
 	return (
 		<MainLayout>
@@ -27,16 +72,17 @@ export const FeedPage: FC = observer(() => {
 				<div className="feed-page__background-image">
 					<div className="feed-block">
 						<CustomSearch />
-						<div className="feed-block__card-container">
+						<div className="feed-block__card-container" ref={feedBlockRef}>
 							<Masonry columnsCount={3} gutter="10px">
 								{imagesStore.imageData.images.map(
 									(item: any, index) => (
 										<ImageCard key={index}>
-											<img src={item.image_url} alt=""/>
+											<img src={item.image_url} alt="" />
 										</ImageCard>
 									),
 								)}
 							</Masonry>
+							{imagesStore.imageData.isFetching && <div>Loading more images...</div>} {/* Индикатор загрузки */}
 						</div>
 					</div>
 					<div className="user-block">

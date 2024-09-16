@@ -13,7 +13,7 @@ export const ImageCard:FC<ComponentProps> = ({children}) => {
         <div className="image-card">
             {children}
             <div className="image-card__footer">
-                <Button><StarOutlined/></Button>
+                <Button><StarOutlined style={{color:"#7f6bce"}}/></Button>
             </div>
         </div>
     )

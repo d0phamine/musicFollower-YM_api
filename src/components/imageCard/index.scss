@@ -9,7 +9,7 @@
     gap: 6px;
 
     img {
-        border-radius: 8px;
+        border-radius: 6px;
     }
 
     &__footer{
@@ -17,8 +17,10 @@
         // background-color: wheat;
 
         .ant-btn {
+
             // margin-top: auto;
-            color: #656565;
+            border-color: #7f6bce;
+            background-color: #141414;
         }
     }
 }
