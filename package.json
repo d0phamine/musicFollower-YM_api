@@ -27,6 +27,7 @@
 	"dependencies": {
 		"@ant-design/icons": "^5.4.0",
 		"@electron/remote": "^2.0.8",
+		"@uidotdev/usehooks": "^2.4.1",
 		"antd": "^5.20.6",
 		"auto-launch": "^5.0.5",
 		"bcryptjs": "^2.4.3",

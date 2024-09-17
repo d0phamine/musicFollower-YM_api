@@ -1,6 +1,6 @@
 import { FC, useEffect, useState, useRef } from "react";
-import { ConfigProvider, theme } from "antd";
-import { SmileOutlined } from "@ant-design/icons";
+import { ConfigProvider, Divider, theme } from "antd";
+import { SmileOutlined, LoadingOutlined} from "@ant-design/icons";
 import { observer } from "mobx-react-lite";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 
@@ -16,7 +16,7 @@ export const FeedPage: FC = observer(() => {
 	const feedBlockRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		// userStore.getUserData();
+		userStore.getUserData();
 		if (imagesStore.imageData.images.length === 0) {
 			imagesStore.getImages(0, imagesStore.imageData.limit);
 			console.log(imagesStore.imageData.images, "get images");
@@ -57,8 +57,8 @@ export const FeedPage: FC = observer(() => {
 			imagesStore.imageData.images.length,
 			imagesStore.imageData.limit,
 		);
-
 		if (newImages.length < imagesStore.imageData.limit) {
+			
 			// Если меньше, чем `limit`, значит больше данных нет
 			imagesStore.changeIsFetching();
 		}
@@ -82,7 +82,7 @@ export const FeedPage: FC = observer(() => {
 									),
 								)}
 							</Masonry>
-							{imagesStore.imageData.isFetching && <div>Loading more images...</div>} {/* Индикатор загрузки */}
+							{imagesStore.imageData.isFetching && <LoadingOutlined style={{color:"#7f6bce"}}/>} {/* Индикатор загрузки */}
 						</div>
 					</div>
 					<div className="user-block">

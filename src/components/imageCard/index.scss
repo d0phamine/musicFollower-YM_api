@@ -21,6 +21,17 @@
             // margin-top: auto;
             border-color: #7f6bce;
             background-color: #141414;
+
+            .anticon{
+                color: #7f6bce;
+            }
+        }
+
+        .ant-btn:hover{
+            box-shadow: 0 0 8px rgb(110, 86, 208);
+
+            .anticon{
+            }
         }
     }
 }

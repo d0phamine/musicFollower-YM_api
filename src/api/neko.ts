@@ -1,7 +1,7 @@
 import { FC } from "react";
 import axios from "axios"
  
-export const getNekos = async(offset:number, limit:number, rating = ['safe']) => {
+export const getNekos = async(offset:number, limit:number, rating = 'safe') => {
     try {
         const res  = await axios.get("https://api.nekosapi.com/v3/images/random", {
             params: { offset, limit, rating },
