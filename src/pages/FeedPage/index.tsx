@@ -1,6 +1,11 @@
 import { FC, useEffect, useState, useRef } from "react";
 import { ConfigProvider, Divider, theme } from "antd";
-import { SmileOutlined, LoadingOutlined} from "@ant-design/icons";
+import {
+	SmileOutlined,
+	LoadingOutlined,
+	LogoutOutlined,
+	StarOutlined,
+} from "@ant-design/icons";
 import { observer } from "mobx-react-lite";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 
@@ -25,12 +30,12 @@ export const FeedPage: FC = observer(() => {
 		const feedBlock = feedBlockRef.current;
 		if (feedBlock) {
 			// Добавляем обработчик скролла на блок
-			feedBlock.addEventListener('scroll', handleScroll);
+			feedBlock.addEventListener("scroll", handleScroll);
 		}
 		return () => {
 			// Очищаем обработчик при размонтировании
 			if (feedBlock) {
-				feedBlock.removeEventListener('scroll', handleScroll);
+				feedBlock.removeEventListener("scroll", handleScroll);
 			}
 		};
 	}, [imagesStore]);
@@ -43,7 +48,11 @@ export const FeedPage: FC = observer(() => {
 			const clientHeight = feedBlock.clientHeight;
 
 			// Проверяем, что пользователь прокрутил до конца блока
-			if (scrollTop + clientHeight >= scrollHeight - 100 && !imagesStore.imageData.isFetching && imagesStore.imageData.hasMore) {
+			if (
+				scrollTop + clientHeight >= scrollHeight - 100 &&
+				!imagesStore.imageData.isFetching &&
+				imagesStore.imageData.hasMore
+			) {
 				fetchMoreImages();
 			}
 		}
@@ -58,7 +67,6 @@ export const FeedPage: FC = observer(() => {
 			imagesStore.imageData.limit,
 		);
 		if (newImages.length < imagesStore.imageData.limit) {
-			
 			// Если меньше, чем `limit`, значит больше данных нет
 			imagesStore.changeIsFetching();
 		}
@@ -72,7 +80,10 @@ export const FeedPage: FC = observer(() => {
 				<div className="feed-page__background-image">
 					<div className="feed-block">
 						<CustomSearch />
-						<div className="feed-block__card-container" ref={feedBlockRef}>
+						<div
+							className="feed-block__card-container"
+							ref={feedBlockRef}
+						>
 							<Masonry columnsCount={3} gutter="10px">
 								{imagesStore.imageData.images.map(
 									(item: any, index) => (
@@ -82,24 +93,46 @@ export const FeedPage: FC = observer(() => {
 									),
 								)}
 							</Masonry>
-							{imagesStore.imageData.isFetching && <LoadingOutlined style={{color:"#7f6bce"}}/>} {/* Индикатор загрузки */}
+							{imagesStore.imageData.isFetching && (
+								<LoadingOutlined style={{ color: "#7f6bce" }} />
+							)}{" "}
+							{/* Индикатор загрузки */}
 						</div>
 					</div>
 					<div className="user-block">
 						<div className="user-block__info">
-							<div className="info-avatar">
-								<SmileOutlined
+							<div className="info-block">
+								<div className="info-block__avatar">
+									<SmileOutlined
+										style={{
+											color: "#424242",
+											fontSize: "18px",
+										}}
+									/>
+								</div>
+								<div className="info-block__username">
+									{userStore.userData.username}
+								</div>
+							</div>
+
+							<div className="info-logout">
+								<LogoutOutlined
 									style={{
 										color: "#424242",
 										fontSize: "18px",
 									}}
 								/>
 							</div>
-							<div className="info-username">
-								{userStore.userData.username}
-							</div>
 						</div>
-						<div className="user-block__more"></div>
+						<div className="user-block__favorites">
+							<StarOutlined
+								style={{
+									color: "#424242",
+									fontSize: "18px",
+								}}
+							/>
+							<p>Favorites</p>
+						</div>
 					</div>
 				</div>
 			</div>
